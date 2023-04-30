@@ -7,7 +7,7 @@ import { createMarkup } from './js/markup';
 const searchForm = document.querySelector('#search-form');
 const photoCards = document.querySelector('.photo-cards');
 const loadMoreBtn = document.querySelector('.load-more');
-let totalHits = 24;
+let totalHits = 0;
 
 const searchImages = new SearchImages();
 
@@ -18,6 +18,7 @@ function onSearch(evt) {
   evt.preventDefault();
   clearMarkup();
   searchImages.resetPage();
+  totalHits = 24;
 
   searchImages.value = evt.target.searchQuery.value.trim();
 
