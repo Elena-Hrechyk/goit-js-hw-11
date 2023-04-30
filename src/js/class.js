@@ -17,7 +17,6 @@ export default class SearchImages {
     if (resps.status === 404) {
       throw new Error(resps.statusText);
     }
-    console.log(resps.data);
     return resps.data;
   }
 
@@ -36,10 +35,4 @@ export default class SearchImages {
   set searchValue(newValue) {
     this.value = newValue;
   }
-
-  // getTotalHits() {
-  //   this.totalHits += this.totalHits;
-  
-  //   Notiflix.Notify.info(`Hooray! We found ${this.totalHits} images.`);
-  // }
 }
