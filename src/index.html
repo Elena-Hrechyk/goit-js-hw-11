@@ -1,27 +1,31 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Page title</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./sass/index.scss" />
   <script type="module" src="./index.js"></script>
 </head>
 
 <body>
-  <header class="header">
+  <div class="header">
     <form class="search-form" id="search-form">
-      <input type="text" name="searchQuery" autocomplete="off" placeholder="Search images..." class="input-search" />
-      <button class="btn-search" type="submit">
-        <svg class="search-svg" width="32" height="32">
-          <use href="./img/icons.svg#search"></use>
-        </svg>
-      </button>
+      <input type="text" name="searchQuery" autocomplete="off" placeholder="Search images..." class="input-search"
+        required />
+      <svg class="search-svg" width="24" height="24">
+        <use href="./img/icons.svg#search"></use>
+      </svg>
+      <button class="btn-search" type="submit">Search</button>
     </form>
-  </header>
+  </div>
 
-
+  <ul class="photo-cards"></ul>
+  <button type="button" class="load-more">Load more</button>
 </body>
 
 </html>
