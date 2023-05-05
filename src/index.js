@@ -5,15 +5,12 @@ import SearchImages from './js/class';
 import { createMarkup } from './js/markup';
 import { clearMarkup } from './js/markup';
 import { getPagesQuantity } from './js/pagesQuantity';
-// import { lightbox } from './js/markup';
 
 const searchForm = document.querySelector('#search-form');
 export const gallery = document.querySelector('.gallery');
 export const loadMoreBtn = document.querySelector('.load-more');
 
 let lightbox = {};
-console.log(lightbox);
-
 let totalHits = 0;
 
 const searchImages = new SearchImages();
@@ -48,6 +45,7 @@ function onSearch(evt) {
           searchImages.perPage,
           searchImages.page
         );
+
         searchImages.incrementPage();
       }
     })
@@ -61,7 +59,6 @@ function onSearch(evt) {
 function onLoadMoreImages() {
   searchImages.getImages().then(async resp => {
     gallery.insertAdjacentHTML('beforeend', createMarkup(resp.hits));
-
     lightbox.refresh();
 
     totalHits += resp.hits.length;
