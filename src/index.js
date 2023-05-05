@@ -11,7 +11,8 @@ const searchForm = document.querySelector('#search-form');
 export const gallery = document.querySelector('.gallery');
 export const loadMoreBtn = document.querySelector('.load-more');
 
-let lightbox = new SimpleLightbox('.gallery a');
+let lightbox = {};
+console.log(lightbox);
 
 let totalHits = 0;
 
@@ -38,7 +39,7 @@ function onSearch(evt) {
         clearMarkup();
       } else {
         gallery.insertAdjacentHTML('beforeend', createMarkup(resp.hits));
-        let lightbox = new SimpleLightbox('.gallery a');
+        lightbox = new SimpleLightbox('.gallery a');
 
         loadMoreBtn.style.display = 'block';
 
@@ -61,7 +62,7 @@ function onLoadMoreImages() {
   searchImages.getImages().then(async resp => {
     gallery.insertAdjacentHTML('beforeend', createMarkup(resp.hits));
 
-    let lightbox = new SimpleLightbox('.gallery a');
+    lightbox.refresh();
 
     totalHits += resp.hits.length;
     Notiflix.Notify.info(`Hooray! We found ${totalHits} images.`);
