@@ -3,10 +3,16 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import SearchImages from './js/class';
 import { createMarkup } from './js/markup';
+import { clearMarkup } from './js/markup';
+import { getPagesQuantity } from './js/pagesQuantity';
+// import { lightbox } from './js/markup';
 
 const searchForm = document.querySelector('#search-form');
-const photoCards = document.querySelector('.photo-cards');
-const loadMoreBtn = document.querySelector('.load-more');
+export const gallery = document.querySelector('.gallery');
+export const loadMoreBtn = document.querySelector('.load-more');
+
+let lightbox = new SimpleLightbox('.gallery a');
+
 let totalHits = 0;
 
 const searchImages = new SearchImages();
@@ -18,7 +24,7 @@ function onSearch(evt) {
   evt.preventDefault();
   clearMarkup();
   searchImages.resetPage();
-  totalHits = 24;
+  totalHits = searchImages.perPage;
 
   searchImages.value = evt.target.searchQuery.value.trim();
 
@@ -31,9 +37,16 @@ function onSearch(evt) {
         );
         clearMarkup();
       } else {
-        photoCards.insertAdjacentHTML('beforeend', createMarkup(resp.hits));
-        let lightbox = new SimpleLightbox('.link');
+        gallery.insertAdjacentHTML('beforeend', createMarkup(resp.hits));
+        let lightbox = new SimpleLightbox('.gallery a');
+
         loadMoreBtn.style.display = 'block';
+
+        getPagesQuantity(
+          resp.totalHits,
+          searchImages.perPage,
+          searchImages.page
+        );
         searchImages.incrementPage();
       }
     })
@@ -46,20 +59,15 @@ function onSearch(evt) {
 
 function onLoadMoreImages() {
   searchImages.getImages().then(async resp => {
-    photoCards.insertAdjacentHTML('beforeend', createMarkup(resp.hits));
-    let lightbox = new SimpleLightbox('.link');
-    const pagesQuantity = Math.ceil(resp.totalHits / resp.hits.length);
-    if (searchImages.page === pagesQuantity) {
-      loadMoreBtn.style.display = 'none';
-      return;
-    }
+    gallery.insertAdjacentHTML('beforeend', createMarkup(resp.hits));
+
+    let lightbox = new SimpleLightbox('.gallery a');
+
     totalHits += resp.hits.length;
     Notiflix.Notify.info(`Hooray! We found ${totalHits} images.`);
+
+    getPagesQuantity(resp.totalHits, searchImages.perPage, searchImages.page);
+
     searchImages.incrementPage();
   });
-}
-
-function clearMarkup() {
-  photoCards.innerHTML = '';
-  loadMoreBtn.style.display = 'none';
 }

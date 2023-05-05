@@ -1,3 +1,7 @@
+// розмітка HTML
+import { gallery } from '..';
+import { loadMoreBtn } from '..';
+
 export function createMarkup(data) {
   return data
     .map(
@@ -30,4 +34,9 @@ export function createMarkup(data) {
     </li>`
     )
     .join('');
+}
+
+export function clearMarkup() {
+  gallery.innerHTML = '';
+  loadMoreBtn.style.display = 'none';
 }
